@@ -6,7 +6,7 @@ GithubStats.factory('Github', function(SettingsService, $q, $http) {
         token = prompt("Please enter the github auth token");
         localStorage.setItem('token', token);
     }
-    var credentials = 'SchizoDuckie:' + localStorage.getItem('token');
+    var credentials = localStorage.getItem('token');
 
     var endpoints = {
         repos: 'https://api.github.com/users/%s/repos',
@@ -26,7 +26,7 @@ GithubStats.factory('Github', function(SettingsService, $q, $http) {
         getRepositories: function(name) {
             return $http.get(getUrl('repos', name), {
                 headers: {
-                    Authorization: 'Basic ' + credentials
+                    Authorization: 'Bearer ' + credentials
                 }
             }).then(function(data) {
                 return data.data;
@@ -35,7 +35,7 @@ GithubStats.factory('Github', function(SettingsService, $q, $http) {
         getReleases: function(name, repository) {
             return $http.get(getUrl('releases', name, repository), {
                 headers: {
-                    Authorization: 'Basic ' + credentials
+                    Authorization: 'Bearer ' + credentials
                 }
             }).then(function(data) {
                 return data.data;
